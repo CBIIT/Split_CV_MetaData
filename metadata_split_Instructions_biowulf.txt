@@ -1,0 +1,48 @@
+1) Open a terminal window and request a GPU node:
+
+## FASTEST GPU: V100 and A100
+
+
+For V100 Run:		sinteractive --constraint=gpuv100 --gres=gpu:v100:4,lscratch:500  --cpus-per-task=32 --mem=120g -t 1-12
+
+For A100 Run:		sinteractive --constraint=gpua100 --gres=gpu:a100:4,lscratch:400  --cpus-per-task=32 --mem=240g -t 1-12
+
+
+## FAST GPUS: P100 and V100X
+
+For P100 Run:		sinteractive --constraint=gpup100 --gres=gpu:p100:4,lscratch:400  --cpus-per-task=32 --mem=120g -t 1-12
+
+For V100x Run:		sinteractive --constraint=gpuv100x --gres=gpu:v100x:1,lscratch:500 --cpus-per-task=4 --mem=120g -t 1-12
+
+## Good GPU, Kepler 80, 12GB VRAM  ---
+sinteractive --constraint=gpuk80 --gres=gpu:k80:4,lscratch:700  --cpus-per-task=32 --mem=244g -t 1-12
+
+## Use this command if you ARE NOT doing deeping learning
+sinteractive --gres=lscratch:700  --cpus-per-task=32 --mem=244g -t 1-12
+
+
+2) source to HiTIF miniconda3 by running:
+
+source /data/HiTIF/progs/miniconda/miniconda3/etc/profile.d/conda.sh
+
+3) activate hitips environment:
+
+conda activate hitips_pip
+
+4) run well_split_metadata.py:
+
+python /data/HiTIF/progs/metadata_split/well_split_metadata.py <path_to_your_image_folder>
+
+
+Example: 
+
+python /data/HiTIF/progs/metadata_split/well_split_metadata.py /data2/test_images/200830-FSA-PLATE1-EXP081720_20200830_202053/AssayPlate_PerkinElmer_CellCarrier-384
+
+
+This will add well-separated metadata files to the same directory. The files names have the "colX_rosY__MeasurementData.mlf" name pattern that X and Y show the column and row of that well. 
+such as "col12_row6_MeasurementData.mlf" for well in column 12 and row 6.
+
+Now each one of these files can be loaded into HiTIPS saparately to analyze that specific well.
+
+
+
